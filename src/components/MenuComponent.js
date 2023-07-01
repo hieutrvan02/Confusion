@@ -5,8 +5,7 @@ import {
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 
-function RenderMenuItem({ item, isLoading, errMess }) {
-
+function RenderMenuItem({ dish, isLoading, errMess }) {
   if (isLoading) {
     return (
       <Loading />
@@ -20,12 +19,12 @@ function RenderMenuItem({ item, isLoading, errMess }) {
   else
     return (
       <Card>
-        <CardImg src={item.image} alt={item.name} />
-        <CardBody>
-          <CardTitle>{item.name}</CardTitle>
-          {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle> : null}
-          <CardText>{item.description}</CardText>
-        </CardBody>
+        <Link to={`/menu/${dish.id}`}>
+          <CardImg width="100%" src={dish.image} alt={dish.name} />
+          <CardImgOverlay>
+            <CardTitle>{dish.name}</CardTitle>
+          </CardImgOverlay>
+        </Link>
       </Card>
     );
 
@@ -35,7 +34,7 @@ const Menu = (props) => {
   const menu = props.dishes.dishes.map((dish) => {
     return (
       <div className="col-12 col-md-3" key={dish.id}>
-        <RenderMenuItem item={dish} isLoading={props.dishesLoading} errMess={props.dishesErrMess} />
+        <RenderMenuItem dish={dish} isLoading={props.dishesLoading} errMess={props.dishesErrMess} />
       </div>
     );
   });
